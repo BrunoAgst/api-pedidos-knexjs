@@ -57,7 +57,6 @@ router.put('/v1/client/:id', (req, res) => {
         telefone: `${dados.telefone}`, 
         email: `${dados.email}`, 
         endereco: `${dados.endereco}`,
-        valor: `${dados.valor}`
 
     }).table("client").then(data => {
         console.log(data);
@@ -73,7 +72,6 @@ router.put('/v1/client/:id', (req, res) => {
 router.delete('/v1/client/:id', (req, res) => {
     
     var id = req.params.id;
-    console.log(id)
     
     database.where({id: `${id}`}).delete().table("client").then(data => {
         console.log(data);
