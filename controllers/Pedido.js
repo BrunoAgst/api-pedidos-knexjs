@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const database = require('../database/database');
 const verificaId = require('../function/verificaId');
+const verificaBody = require('../function/verificaBody');
 
 router.get('/v1/order', (req, res) => {
 
@@ -21,11 +22,18 @@ router.post('/v1/order/:id', async (req, res) => {
     var body = req.body;
 
     var idClient = await verificaId(id);  
+    var bodyClient = await verificaBody(body);
 
     if(!Number.isInteger(idClient)){
         res.json("Erro cliente não encontrado");
         return;
     }
+
+    if(bodyClient == false){
+        res.json("Erro campo inválido");
+        return;
+    }
+
 
     database.insert({
         nome: body.nome, 
@@ -34,7 +42,6 @@ router.post('/v1/order/:id', async (req, res) => {
         client_id: idClient
 
     }).into("order").then(data => {
-        console.log(data);
         res.json("Pedido cadastrado");
 
     }).catch(err => {
@@ -49,7 +56,6 @@ router.delete('/v1/order/:id', (req, res) => {
     var id = req.params.id;
 
     database.where({id: `${id}`}).delete().table("order").then(data => {
-        console.log(data);
         res.json("Pedido Excluído");
 
     }).catch(err => {
@@ -59,6 +65,5 @@ router.delete('/v1/order/:id', (req, res) => {
     });
 
 });
-
 
 module.exports = router;

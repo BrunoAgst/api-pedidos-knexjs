@@ -20,7 +20,6 @@ router.post('/v1/client', (req, res) => {
     var dados = req.body;
 
     database.insert(dados).into("client").then(data => {
-        console.log(data);
         res.send("Cadastrado com sucesso");
     
     }).catch(err => {
@@ -36,10 +35,10 @@ router.get('/v1/client', (req, res) => {
     var nome = req.body.nome;
 
     database.select([`${nome}`]).table("client").then(data => {
-        console.log(data);
+        res.json(data);
     
     }).catch(err => {
-        console.log(data);
+        console.log(err);
         res.send("Error");
 
     });
@@ -59,7 +58,6 @@ router.put('/v1/client/:id', (req, res) => {
         endereco: `${dados.endereco}`,
 
     }).table("client").then(data => {
-        console.log(data);
         res.send("Alterado com sucesso");
 
     }).catch(err => {
@@ -74,7 +72,6 @@ router.delete('/v1/client/:id', (req, res) => {
     var id = req.params.id;
     
     database.where({id: `${id}`}).delete().table("client").then(data => {
-        console.log(data);
         res.send("Deletado com sucesso");
 
     }).catch(err => {
@@ -84,6 +81,5 @@ router.delete('/v1/client/:id', (req, res) => {
     });
 
 });
-
 
 module.exports = router;
