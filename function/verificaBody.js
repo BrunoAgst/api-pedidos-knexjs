@@ -11,21 +11,15 @@ function verifyBody(body){
             if(typeof valor === "number"){
                 return true;
 
-            } 
-            else {
-                return false;
-
-            }
-        }
-        else{
+            }        
             return false;
-
+            
         }
-    }
-    else{
         return false;
-
+        
     }
+    return false;
+    
 }
 
 module.exports = verifyBody;
